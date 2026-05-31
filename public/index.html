@@ -1,28 +1,38 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
-
     <title>LoRa Dashboard</title>
-
     <link rel="stylesheet" href="style.css">
-
     <script src="/socket.io/socket.io.js"></script>
-
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>📡 LoRa AI Dashboard</h1>
+    <h1>📡 LoRa AI Dashboard</h1>
 
-        <div id="messages"></div>
+    <div class="split">
+
+        <!-- LEFT: SENDER -->
+        <div class="panel sender">
+            <h2>📤 Sender</h2>
+            <div id="senderBox"></div>
+        </div>
+
+        <!-- RIGHT: RECEIVER -->
+        <div class="panel receiver">
+            <h2>📥 Receiver</h2>
+            <div id="receiverBox"></div>
+        </div>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>

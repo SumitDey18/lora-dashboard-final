@@ -1,6 +1,12 @@
+
+
+
+
+
 const socket = io();
 
-const messages = document.getElementById("messages");
+const senderBox = document.querySelector("#senderBox");
+const receiverBox = document.querySelector("#receiverBox");
 
 // Load previous logs
 fetch("/logs")
@@ -13,37 +19,36 @@ fetch("/logs")
 
 // Real-time updates
 socket.on("newMessage", (data) => {
-
     addMessage(data);
-
 });
 
 function addMessage(data) {
 
     const div = document.createElement("div");
+    div.className = "card";
 
     const jammed = data.snr < 0;
 
-    div.className = jammed ? "card jammed" : "card free";
-
     div.innerHTML = `
-
-        <h2>${data.payload}</h2>
-
+        <h3>${data.payload}</h3>
         <p>📶 Channel: ${data.channel}</p>
-
         <p>📡 RSSI: ${data.rssi}</p>
-
         <p>📈 SNR: ${data.snr}</p>
-
         <p>🎯 Selected: ${data.selectedChannel}</p>
-
         <p>🧠 Status: ${jammed ? "JAMMED" : "FREE"}</p>
-
-        <p class="time">${data.time}</p>
-
+        <p>⏱ ${data.time}</p>
     `;
 
-    messages.prepend(div);
+    // ===== SPLIT LOGIC =====
 
+    if (data.role === "sender") {
+
+        senderBox.innerHTML = "";   // ONLY latest
+        senderBox.appendChild(div);
+
+    } else if (data.role === "receiver") {
+
+        receiverBox.innerHTML = "";  // ONLY latest
+        receiverBox.appendChild(div);
+    }
 }
